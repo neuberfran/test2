@@ -1,4 +1,4 @@
-##this is oscillator project##
+# This is oscillator project
 
 https://stm32world.com/wiki/CH32_Oscillator#Oscillator_Calculation
 
