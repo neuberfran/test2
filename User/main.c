@@ -102,7 +102,7 @@ __attribute__((interrupt("WCH-Interrupt-fast"))) void DMA1_Channel1_IRQHandler (
 }
 
 void DMA_Interrupt_Init () {
-    /*Configuration interrupt priority*/
+    // Configuration interrupt priority
     NVIC_InitTypeDef NVIC_InitStructure = { 0 };
     NVIC_InitStructure.NVIC_IRQChannel = DMA2_Channel3_IRQn;
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1; //Seeing priority

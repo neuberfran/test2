@@ -17,10 +17,25 @@ uint32_t uwTick = 0;
  *
  * @return  none
  */
-__attribute__((interrupt("WCH-Interrupt-fast"))) void SysTick_Handler2(void) {
-    SysTick->SR = 0;
-    ++uwTick;
+//__attribute__((interrupt("WCH-Interrupt-fast"))) void SysTick_Handler(void) {
+//    SysTick->SR = 0;
+//    ++uwTick;
+//}
+
+void SysTick_Handler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
+void SysTick_Handler(void)
+{
+    GET_INT_SP();
+    /* enter interrupt */
+    rt_interrupt_enter();
+    SysTick->SR=0;
+    rt_tick_increase();
+    /* leave interrupt */
+    rt_interrupt_leave();
+    FREE_INT_SP();
+
 }
+
 
 /*********************************************************************
  * @fn      Systick_Init
