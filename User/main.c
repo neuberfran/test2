@@ -323,9 +323,9 @@ void set_amplitude (Osc_TypeDef *osc, float amplitude) {
  */
 int main (void) {
 
-    Systick_Init ();
-
-    Debug_Init (115200);
+//    Systick_Init ();
+//
+//    Debug_Init (115200);
     printf ("SystemClk:%d\r\n", SystemCoreClock);
     printf ("Dual DAC Generation Test\r\n");
 
@@ -383,7 +383,7 @@ int main (void) {
 
             last_tick = now;
         }
-
+        rt_thread_mdelay(500);
     }
 }
 

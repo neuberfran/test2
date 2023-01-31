@@ -36,7 +36,8 @@ rtthread/board.o: ../rtthread/board.c ../rtthread/board.h \
  C:\Users\neuberfran\mrs_community_workspace\test2\rtthread\include/rtdef.h \
  C:\Users\neuberfran\mrs_community_workspace\test2\rtthread\include/rtservice.h \
  C:\Users\neuberfran\mrs_community_workspace\test2\rtthread\include/rtm.h \
- C:\Users\neuberfran\mrs_community_workspace\test2\rtthread\components\finsh/finsh_api.h
+ C:\Users\neuberfran\mrs_community_workspace\test2\rtthread\components\finsh/finsh_api.h \
+ C:\Users\neuberfran\mrs_community_workspace\test2\Peripheral\inc/systick.h
 
 ../rtthread/board.h:
 
@@ -115,3 +116,5 @@ C:\Users\neuberfran\mrs_community_workspace\test2\rtthread\include/rtservice.h:
 C:\Users\neuberfran\mrs_community_workspace\test2\rtthread\include/rtm.h:
 
 C:\Users\neuberfran\mrs_community_workspace\test2\rtthread\components\finsh/finsh_api.h:
+
+C:\Users\neuberfran\mrs_community_workspace\test2\Peripheral\inc/systick.h:

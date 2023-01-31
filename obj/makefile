@@ -55,7 +55,7 @@ all: test2.elf secondary-outputs
 test2.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GNU RISC-V Cross C Linker'
-	riscv-none-embed-gcc -march=rv32imac -mabi=ilp32 -msmall-data-limit=8 -msave-restore -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -Wunused -Wuninitialized  -g -T "C:\Users\neuberfran\mrs_community_workspace\test2\Ld\Link.ld" -nostartfiles -Xlinker --gc-sections -Lm -Wl,-Map,"test2.map" --specs=nano.specs --specs=nosys.specs -o "test2.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	riscv-none-embed-gcc -march=rv32imafc -mabi=ilp32f -msmall-data-limit=8 -msave-restore -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -Wunused -Wuninitialized  -g -T "C:\Users\neuberfran\mrs_community_workspace\test2\Ld\Link.ld" -nostartfiles -Xlinker --gc-sections -Lm -Wl,-Map,"test2.map" --specs=nano.specs --specs=nosys.specs -o "test2.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

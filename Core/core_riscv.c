@@ -540,19 +540,15 @@ uint32_t __get_MHARTID(void)
 /*********************************************************************
  * @fn      __get_SP
  *
- * @brief   none
+ * @brief   Return SP Register
  *
- * @return  Return SP Register
+ * @return  SP value
  */
 uint32_t __get_SP(void)
 {
   uint32_t result;
 
-  asm volatile (
-   "mv %0," "sp"
-   : "=r"(result)
-   :
- );
+  asm volatile ( "mv %0," "sp" : "=r"(result) : );
   return (result);
 }
 

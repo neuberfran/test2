@@ -56,11 +56,6 @@ static void GPIOE_CLK_ENABLE(void)
 }
 #endif
 
-
-
-
-
-
 /* CH32 GPIO driver */
 struct pin_index
 {
@@ -698,114 +693,114 @@ void EXTI4_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 void EXTI9_5_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 void EXTI15_10_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 
-void EXTI0_IRQHandler(void)
-{
-    GET_INT_SP();
-    rt_interrupt_enter();
-
-    if(EXTI_GetITStatus(EXTI_Line0)!=RESET)
-    {
-        HAL_GPIO_EXTI_Callback(GPIO_Pin_0);
-        EXTI_ClearITPendingBit(EXTI_Line0);
-    }
-
-    rt_interrupt_leave();
-    FREE_INT_SP();
-}
-
-void EXTI1_IRQHandler(void)
-{
-    GET_INT_SP();
-    rt_interrupt_enter();
-    if(EXTI_GetITStatus(EXTI_Line1)!=RESET)
-    {
-        HAL_GPIO_EXTI_Callback(GPIO_Pin_1);
-        EXTI_ClearITPendingBit(EXTI_Line1);
-    }
-    rt_interrupt_leave();
-    FREE_INT_SP();
-}
-
-void EXTI2_IRQHandler(void)
-{
-    GET_INT_SP();
-    rt_interrupt_enter();
-    if(EXTI_GetITStatus(EXTI_Line2)!=RESET)
-    {
-        HAL_GPIO_EXTI_Callback(GPIO_Pin_2);
-        EXTI_ClearITPendingBit(EXTI_Line2);
-    }
-    rt_interrupt_leave();
-    FREE_INT_SP();
-}
-
-void EXTI3_IRQHandler(void)
-{
-    GET_INT_SP();
-    rt_interrupt_enter();
-    if(EXTI_GetITStatus(EXTI_Line3)!=RESET)
-    {
-        HAL_GPIO_EXTI_Callback(GPIO_Pin_3);
-        EXTI_ClearITPendingBit(EXTI_Line3);
-    }
-    rt_interrupt_leave();
-    FREE_INT_SP();
-}
-
-void EXTI4_IRQHandler(void)
-{
-    GET_INT_SP();
-    rt_interrupt_enter();
-    if(EXTI_GetITStatus(EXTI_Line4)!=RESET)
-    {
-        HAL_GPIO_EXTI_Callback(GPIO_Pin_4);
-        EXTI_ClearITPendingBit(EXTI_Line4);
-    }
-    rt_interrupt_leave();
-    FREE_INT_SP();
-}
-
-void EXTI9_5_IRQHandler(void)
-{
-    GET_INT_SP();
-    rt_interrupt_enter();
-    if( (EXTI_GetITStatus(EXTI_Line5)!=RESET)|| \
-        (EXTI_GetITStatus(EXTI_Line6)!=RESET)|| \
-        (EXTI_GetITStatus(EXTI_Line7)!=RESET)|| \
-        (EXTI_GetITStatus(EXTI_Line8)!=RESET)|| \
-        (EXTI_GetITStatus(EXTI_Line9)!=RESET) )
-    {
-    HAL_GPIO_EXTI_Callback(GPIO_Pin_5);
-    HAL_GPIO_EXTI_Callback(GPIO_Pin_6);
-    HAL_GPIO_EXTI_Callback(GPIO_Pin_7);
-    HAL_GPIO_EXTI_Callback(GPIO_Pin_8);
-    HAL_GPIO_EXTI_Callback(GPIO_Pin_9);
-    EXTI_ClearITPendingBit(EXTI_Line5|EXTI_Line6|EXTI_Line7|EXTI_Line8|EXTI_Line9);
-    }
-    rt_interrupt_leave();
-    FREE_INT_SP();
-}
-
-void EXTI15_10_IRQHandler(void)
-{
-    GET_INT_SP();
-    rt_interrupt_enter();
-    if( (EXTI_GetITStatus(EXTI_Line10)!=RESET)|| \
-        (EXTI_GetITStatus(EXTI_Line11)!=RESET)|| \
-        (EXTI_GetITStatus(EXTI_Line12)!=RESET)|| \
-        (EXTI_GetITStatus(EXTI_Line13)!=RESET)|| \
-        (EXTI_GetITStatus(EXTI_Line14)!=RESET)|| \
-        (EXTI_GetITStatus(EXTI_Line15)!=RESET))
-    {
-    HAL_GPIO_EXTI_Callback(GPIO_Pin_10);
-    HAL_GPIO_EXTI_Callback(GPIO_Pin_11);
-    HAL_GPIO_EXTI_Callback(GPIO_Pin_12);
-    HAL_GPIO_EXTI_Callback(GPIO_Pin_13);
-    HAL_GPIO_EXTI_Callback(GPIO_Pin_14);
-    HAL_GPIO_EXTI_Callback(GPIO_Pin_15);
-    EXTI_ClearITPendingBit(EXTI_Line10|EXTI_Line11|EXTI_Line12|EXTI_Line13|EXTI_Line14|EXTI_Line15);
-    }
-    rt_interrupt_leave();
-    FREE_INT_SP();
-}
+//void EXTI0_IRQHandler(void)
+//{
+//    GET_INT_SP();
+//    rt_interrupt_enter();
+//
+//    if(EXTI_GetITStatus(EXTI_Line0)!=RESET)
+//    {
+//        HAL_GPIO_EXTI_Callback(GPIO_Pin_0);
+//        EXTI_ClearITPendingBit(EXTI_Line0);
+//    }
+//
+//    rt_interrupt_leave();
+//    FREE_INT_SP();
+//}
+//
+//void EXTI1_IRQHandler(void)
+//{
+//    GET_INT_SP();
+//    rt_interrupt_enter();
+//    if(EXTI_GetITStatus(EXTI_Line1)!=RESET)
+//    {
+//        HAL_GPIO_EXTI_Callback(GPIO_Pin_1);
+//        EXTI_ClearITPendingBit(EXTI_Line1);
+//    }
+//    rt_interrupt_leave();
+//    FREE_INT_SP();
+//}
+//
+//void EXTI2_IRQHandler(void)
+//{
+//    GET_INT_SP();
+//    rt_interrupt_enter();
+//    if(EXTI_GetITStatus(EXTI_Line2)!=RESET)
+//    {
+//        HAL_GPIO_EXTI_Callback(GPIO_Pin_2);
+//        EXTI_ClearITPendingBit(EXTI_Line2);
+//    }
+//    rt_interrupt_leave();
+//    FREE_INT_SP();
+//}
+//
+//void EXTI3_IRQHandler(void)
+//{
+//    GET_INT_SP();
+//    rt_interrupt_enter();
+//    if(EXTI_GetITStatus(EXTI_Line3)!=RESET)
+//    {
+//        HAL_GPIO_EXTI_Callback(GPIO_Pin_3);
+//        EXTI_ClearITPendingBit(EXTI_Line3);
+//    }
+//    rt_interrupt_leave();
+//    FREE_INT_SP();
+//}
+//
+//void EXTI4_IRQHandler(void)
+//{
+//    GET_INT_SP();
+//    rt_interrupt_enter();
+//    if(EXTI_GetITStatus(EXTI_Line4)!=RESET)
+//    {
+//        HAL_GPIO_EXTI_Callback(GPIO_Pin_4);
+//        EXTI_ClearITPendingBit(EXTI_Line4);
+//    }
+//    rt_interrupt_leave();
+//    FREE_INT_SP();
+//}
+//
+//void EXTI9_5_IRQHandler(void)
+//{
+//    GET_INT_SP();
+//    rt_interrupt_enter();
+//    if( (EXTI_GetITStatus(EXTI_Line5)!=RESET)|| \
+//        (EXTI_GetITStatus(EXTI_Line6)!=RESET)|| \
+//        (EXTI_GetITStatus(EXTI_Line7)!=RESET)|| \
+//        (EXTI_GetITStatus(EXTI_Line8)!=RESET)|| \
+//        (EXTI_GetITStatus(EXTI_Line9)!=RESET) )
+//    {
+//    HAL_GPIO_EXTI_Callback(GPIO_Pin_5);
+//    HAL_GPIO_EXTI_Callback(GPIO_Pin_6);
+//    HAL_GPIO_EXTI_Callback(GPIO_Pin_7);
+//    HAL_GPIO_EXTI_Callback(GPIO_Pin_8);
+//    HAL_GPIO_EXTI_Callback(GPIO_Pin_9);
+//    EXTI_ClearITPendingBit(EXTI_Line5|EXTI_Line6|EXTI_Line7|EXTI_Line8|EXTI_Line9);
+//    }
+//    rt_interrupt_leave();
+//    FREE_INT_SP();
+//}
+//
+//void EXTI15_10_IRQHandler(void)
+//{
+//    GET_INT_SP();
+//    rt_interrupt_enter();
+//    if( (EXTI_GetITStatus(EXTI_Line10)!=RESET)|| \
+//        (EXTI_GetITStatus(EXTI_Line11)!=RESET)|| \
+//        (EXTI_GetITStatus(EXTI_Line12)!=RESET)|| \
+//        (EXTI_GetITStatus(EXTI_Line13)!=RESET)|| \
+//        (EXTI_GetITStatus(EXTI_Line14)!=RESET)|| \
+//        (EXTI_GetITStatus(EXTI_Line15)!=RESET))
+//    {
+//    HAL_GPIO_EXTI_Callback(GPIO_Pin_10);
+//    HAL_GPIO_EXTI_Callback(GPIO_Pin_11);
+//    HAL_GPIO_EXTI_Callback(GPIO_Pin_12);
+//    HAL_GPIO_EXTI_Callback(GPIO_Pin_13);
+//    HAL_GPIO_EXTI_Callback(GPIO_Pin_14);
+//    HAL_GPIO_EXTI_Callback(GPIO_Pin_15);
+//    EXTI_ClearITPendingBit(EXTI_Line10|EXTI_Line11|EXTI_Line12|EXTI_Line13|EXTI_Line14|EXTI_Line15);
+//    }
+//    rt_interrupt_leave();
+//    FREE_INT_SP();
+//}
 #endif

@@ -5,7 +5,7 @@
  *      Author: lth
  */
 
-//#include "ch32v30x.h"
+#include "ch32v30x.h"
 #include "systick.h"
 
 uint32_t uwTick = 0;
@@ -17,25 +17,34 @@ uint32_t uwTick = 0;
  *
  * @return  none
  */
-//__attribute__((interrupt("WCH-Interrupt-fast"))) void SysTick_Handler(void) {
-//    SysTick->SR = 0;
+__attribute__((interrupt("WCH-Interrupt-fast"))) void SysTick_Handler(void) {
+    SysTick->SR = 0;
+    ++uwTick;
+}
+//    GET_INT_SP();
+//   /* enter interrupt */
+//    rt_interrupt_enter();
+//    SysTick->SR=0;
 //    ++uwTick;
+//    rt_tick_increase();
+//    /* leave interrupt */
+//    rt_interrupt_leave();
+//    FREE_INT_SP();
 //}
 
-void SysTick_Handler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
-void SysTick_Handler(void)
-{
-    GET_INT_SP();
-    /* enter interrupt */
-    rt_interrupt_enter();
-    SysTick->SR=0;
-    rt_tick_increase();
-    /* leave interrupt */
-    rt_interrupt_leave();
-    FREE_INT_SP();
-
-}
-
+//void SysTick_Handler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
+//void SysTick_Handler(void)
+//{
+//    GET_INT_SP();
+//    /* enter interrupt */
+//    rt_interrupt_enter();
+//    SysTick->SR=0;
+//    rt_tick_increase();
+//    /* leave interrupt */
+//    rt_interrupt_leave();
+//    FREE_INT_SP();
+//
+//}
 
 /*********************************************************************
  * @fn      Systick_Init
@@ -68,7 +77,8 @@ void Systick_Init(void) {
  *
  * @return  Current tick
  */
+
 uint32_t GetTick() {
-    return uwTick;
+   return uwTick;
 }
 

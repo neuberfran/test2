@@ -12,12 +12,12 @@
 
 /* IO definitions */
 #ifdef __cplusplus
-  #define     __I     volatile                /*!< defines 'read only' permissions      */
+  #define     __I     volatile                /* defines 'read only' permissions */
 #else
-  #define     __I     volatile const          /*!< defines 'read only' permissions     */
+  #define     __I     volatile const          /* defines 'read only' permissions */
 #endif
-#define     __O     volatile                  /*!< defines 'write only' permissions     */
-#define     __IO    volatile                  /*!< defines 'read / write' permissions   */
+#define     __O     volatile                  /* defines 'write only' permissions */
+#define     __IO    volatile                  /* defines 'read / write' permissions */
 
 /* Standard Peripheral Library old types (maintained for legacy purpose) */
 typedef __I uint64_t vuc64;  /* Read Only */
@@ -108,8 +108,8 @@ typedef struct
 #define PFIC            ((PFIC_Type *) 0xE000E000 )
 #define NVIC            PFIC
 #define NVIC_KEY1       ((uint32_t)0xFA050000)
-#define NVIC_KEY2               ((uint32_t)0xBCAF0000)
-#define NVIC_KEY3               ((uint32_t)0xBEEF0000)
+#define	NVIC_KEY2				((uint32_t)0xBCAF0000)
+#define	NVIC_KEY3				((uint32_t)0xBEEF0000)
 
 #define SysTick         ((SysTick_Type *) 0xE000F000)
 
@@ -120,7 +120,10 @@ typedef struct
  *
  * @return  none
  */
-RV_STATIC_INLINE void __enable_irq() { __asm volatile ("csrw 0x800, %0" : : "r" (0x6088) ); }
+RV_STATIC_INLINE void __enable_irq()
+{
+  __asm volatile ("csrw 0x800, %0" : : "r" (0x6088) );
+}
 
 /*********************************************************************
  * @fn      __disable_irq
@@ -129,7 +132,10 @@ RV_STATIC_INLINE void __enable_irq() { __asm volatile ("csrw 0x800, %0" : : "r" 
  *
  * @return  none
  */
-RV_STATIC_INLINE void __disable_irq() { __asm volatile ("csrw 0x800, %0" : : "r" (0x6000) ); }
+RV_STATIC_INLINE void __disable_irq()
+{
+  __asm volatile ("csrw 0x800, %0" : : "r" (0x6000) );
+}
 
 /*********************************************************************
  * @fn      __NOP
@@ -138,7 +144,10 @@ RV_STATIC_INLINE void __disable_irq() { __asm volatile ("csrw 0x800, %0" : : "r"
  *
  * @return  none
  */
-RV_STATIC_INLINE void __NOP() { __asm volatile ("nop"); }
+RV_STATIC_INLINE void __NOP()
+{
+  __asm volatile ("nop");
+}
 
 /*********************************************************************
  * @fn      NVIC_EnableIRQ
@@ -149,7 +158,8 @@ RV_STATIC_INLINE void __NOP() { __asm volatile ("nop"); }
  *
  * @return  none
  */
-RV_STATIC_INLINE void NVIC_EnableIRQ(IRQn_Type IRQn){
+RV_STATIC_INLINE void NVIC_EnableIRQ(IRQn_Type IRQn)
+{
   NVIC->IENR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F));
 }
 
@@ -265,7 +275,7 @@ RV_STATIC_INLINE void NVIC_SetPriority(IRQn_Type IRQn, uint8_t priority)
  */
 __attribute__( ( always_inline ) ) RV_STATIC_INLINE void __WFI(void)
 {
-  NVIC->SCTLR &= ~(1<<3);   // wfi
+  NVIC->SCTLR &= ~(1<<3);	// wfi
   asm volatile ("wfi");
 }
 
@@ -281,7 +291,7 @@ __attribute__( ( always_inline ) ) RV_STATIC_INLINE void __WFE(void)
   uint32_t t;
 
   t = NVIC->SCTLR;
-  NVIC->SCTLR |= (1<<3)|(1<<5);     // (wfi->wfe)+(__sev)
+  NVIC->SCTLR |= (1<<3)|(1<<5);		// (wfi->wfe)+(__sev)
   NVIC->SCTLR = (NVIC->SCTLR & ~(1<<5)) | ( t & (1<<5));
   asm volatile ("wfi");
   asm volatile ("wfi");
@@ -304,11 +314,11 @@ RV_STATIC_INLINE void SetVTFIRQ(uint32_t addr, IRQn_Type IRQn, uint8_t num, Func
   if (NewState != DISABLE)
   {
       NVIC->VTFIDR[num] = IRQn;
-      NVIC->VTFADDR[num] = ((addr&0xF00FFFFE)|0x1);
+      NVIC->VTFADDR[num] = ((addr&0xFFFFFFFE)|0x1);
   }
   else{
       NVIC->VTFIDR[num] = IRQn;
-      NVIC->VTFADDR[num] = ((addr&0xF00FFFFE)&(~0x1));
+      NVIC->VTFADDR[num] = ((addr&0xFFFFFFFE)&(~0x1));
   }
 }
 
@@ -323,7 +333,6 @@ RV_STATIC_INLINE void NVIC_SystemReset(void)
 {
   NVIC->CFGR = NVIC_KEY3|(1<<7);
 }
-
 
 
 /* Core_Exported_Functions */  
@@ -366,10 +375,4 @@ extern uint32_t __get_MHARTID(void);
 extern uint32_t __get_SP(void);
 
 
-
 #endif
-
-
-
-
-

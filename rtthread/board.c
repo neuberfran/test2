@@ -15,7 +15,9 @@
 
 #include <rthw.h>
 #include <rtthread.h>
+#include "systick.h"
 
+// uint32_t uwTick = 0;
 
 // core clock.
 extern uint32_t SystemCoreClock;
@@ -75,9 +77,9 @@ void rt_hw_board_init()
 //    /* enter interrupt */
 //    rt_interrupt_enter();
 //    SysTick->SR=0;
+////    ++uwTick;
 //    rt_tick_increase();
 //    /* leave interrupt */
 //    rt_interrupt_leave();
-//    FREE_INT_SP();
-//
+//    FREE_INT_SP();//
 //}
