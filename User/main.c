@@ -26,11 +26,14 @@
 #include "systick.h"
 #include "debug.h"
 
+#include "rtthread.h"
+
+
 /* Global define */
 #define MAX_VALUE 4095
 #define MID_POINT 2047
-#define SAMPLE_FREQ 48000
-#define BUFFER_SIZE 48 // 48 kHz every 1 ms
+#define SAMPLE_FREQ 96000
+#define BUFFER_SIZE 96 // 48 kHz every 1 ms
 
 /* Global typedef */
 
@@ -45,14 +48,17 @@ typedef struct {
 
 Osc_TypeDef osc[2]; // Two oscillators
 
-uint32_t dac_buffer[2 * BUFFER_SIZE]; // High 16 bit dac out 2, low 16 bit dac out 1
-uint32_t adc_buffer[2 * BUFFER_SIZE];
+uint32_t dac_buffer[5 * BUFFER_SIZE]; // High 16 bit dac out 2, low 16 bit dac out 1
+uint32_t adc_buffer[5 * BUFFER_SIZE];
 
 uint32_t full_count = 0, half_count = 0, adc_count = 0;
 
-static inline void update_dac_buffer (uint32_t *buffer_address) {
-    for (uint8_t sample = 0; sample < BUFFER_SIZE; ++sample) {
-        for (uint8_t oscillator = 0; oscillator < 2; ++oscillator) {
+static inline void update_dac_buffer (uint32_t *buffer_address)
+{
+    for (uint8_t sample = 0; sample < BUFFER_SIZE; ++sample)
+    {
+        for (uint8_t oscillator = 0; oscillator < 2; ++oscillator)
+        {
             osc[oscillator].last_value = osc[oscillator].amplitude * sinf (osc[oscillator].angle);
             osc[oscillator].angle += osc[oscillator].angle_per_sample; // rotate
             if (osc[oscillator].angle > M_TWOPI)
@@ -287,7 +293,7 @@ void Timer_Init (void) {
     RCC_APB2PeriphClockCmd (RCC_APB2Periph_TIM8, ENABLE);
 
     TIM_TimeBaseStructInit (&TIM_TimeBaseStructure);
-    TIM_TimeBaseStructure.TIM_Period = 3000 - 1;
+    TIM_TimeBaseStructure.TIM_Period = 1500 - 1;
     TIM_TimeBaseStructure.TIM_Prescaler = 0;
     TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
     TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
@@ -322,13 +328,10 @@ void set_amplitude (Osc_TypeDef *osc, float amplitude) {
  * @return  none
  */
 int main (void) {
-
 //    Systick_Init ();
-//
 //    Debug_Init (115200);
     rt_kprintf ("SystemClk:%d\r\n", SystemCoreClock);
     rt_kprintf ("Dual DAC Generation Test\r\n");
-
     set_freq (&osc[0], 1000);
     set_amplitude (&osc[0], 0.95);
     set_freq (&osc[1], 1000);
@@ -338,23 +341,16 @@ int main (void) {
     DAC_DMA_Init ();
     ADCs_Init ();
     ADC_DMA_Init ();
-
     Timer_Init ();
-
     uint32_t now = 0, last_tick = 0, last_amp = 0, last_freq = 0;
-
     float amp = 0, amp_change = 0.01;
     float start_freq = 500, end_freq = 1000, freq_change = 20, freq = 500;
-
     while (1) {
-
-     //   now = GetTick ();
-    	now = rt_tick_get();
-
-        if (now - last_amp >= 20) {
-
+//        now = GetTick ();
+        now = rt_tick_get();
+        if (now - last_amp >= 20) //20ms change
+        {
             set_amplitude(&osc[1], amp);
-
             amp += amp_change;
 
             if (amp < 0.1) amp_change = 0.01;
@@ -362,26 +358,22 @@ int main (void) {
 
             last_amp = now;
         }
-
-        if (now - last_freq >= 100) {
+        if (now - last_freq >= 100) // 100ms change
+        {
 
             set_freq(&osc[0], freq);
-
             freq += freq_change;
-
             if (freq >= end_freq) freq_change = -20;
             if (freq <= start_freq) freq_change = 20;
-
             last_freq = now;
         }
-
-        if (now - last_tick >= 1000) {
-
+        if (now - last_tick >= 1000) //1000ms change
+        {
             rt_kprintf ("Tick %lu: full = %lu half = %lu adc = %lu\n", now / 1000, full_count, half_count, adc_count);
-
             last_tick = now;
         }
-        rt_thread_delay(5);
+        rt_thread_delay(5); //5 ticks
+
     }
 }
 
