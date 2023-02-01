@@ -326,19 +326,16 @@ int main (void) {
 //    Systick_Init ();
 //
 //    Debug_Init (115200);
-    printf ("SystemClk:%d\r\n", SystemCoreClock);
-    printf ("Dual DAC Generation Test\r\n");
+    rt_kprintf ("SystemClk:%d\r\n", SystemCoreClock);
+    rt_kprintf ("Dual DAC Generation Test\r\n");
 
-    set_freq (&osc[0], 250);
+    set_freq (&osc[0], 1000);
     set_amplitude (&osc[0], 0.95);
-    set_freq (&osc[1], 249.9);
+    set_freq (&osc[1], 1000);
     set_amplitude (&osc[1], 0.45);
-
     DMA_Interrupt_Init ();
-
     DACs_Init ();
     DAC_DMA_Init ();
-
     ADCs_Init ();
     ADC_DMA_Init ();
 
@@ -347,11 +344,12 @@ int main (void) {
     uint32_t now = 0, last_tick = 0, last_amp = 0, last_freq = 0;
 
     float amp = 0, amp_change = 0.01;
-    float start_freq = 110, end_freq = 220, freq_change = 10, freq = 110;
+    float start_freq = 500, end_freq = 1000, freq_change = 20, freq = 500;
 
     while (1) {
 
-        now = GetTick ();
+     //   now = GetTick ();
+    	now = rt_tick_get();
 
         if (now - last_amp >= 20) {
 
@@ -365,25 +363,25 @@ int main (void) {
             last_amp = now;
         }
 
-//        if (now - last_freq >= 100) {
-//
-//            set_freq(&osc[0], freq);
-//
-//            freq += freq_change;
-//
-//            if (freq >= end_freq) freq_change = -10;
-//            if (freq <= start_freq) freq_change = 10;
-//
-//            last_freq = now;
-//        }
+        if (now - last_freq >= 100) {
+
+            set_freq(&osc[0], freq);
+
+            freq += freq_change;
+
+            if (freq >= end_freq) freq_change = -20;
+            if (freq <= start_freq) freq_change = 20;
+
+            last_freq = now;
+        }
 
         if (now - last_tick >= 1000) {
 
-            printf ("Tick %lu: full = %lu half = %lu adc = %lu\n", now / 1000, full_count, half_count, adc_count);
+            rt_kprintf ("Tick %lu: full = %lu half = %lu adc = %lu\n", now / 1000, full_count, half_count, adc_count);
 
             last_tick = now;
         }
-        rt_thread_mdelay(500);
+        rt_thread_delay(5);
     }
 }
 
